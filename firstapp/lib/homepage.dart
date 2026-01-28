@@ -13,6 +13,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  TextEditingController counterController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,13 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _decremtCounter() {
     setState(() {
-      _counter >= 1 ? _counter-- : _counter = 0;
+      _counter >= 1 ? _counter = _counter - 10 : _counter = 0;
     });
   }
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      _counter = _counter + 10;
     });
   }
 
@@ -78,6 +80,27 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: .center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: counterController,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  border: OutlineInputBorder(),
+                  labelText: 'Entrez un nombre',
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    _counter = int.tryParse(value) ?? 0;
+                  });
+                },
+              ),
+            ),
+
             const Text('Vous avez cliquer sur le bouton :'),
             Text(
               '$_counter',
