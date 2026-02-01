@@ -15,6 +15,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController counterController = TextEditingController();
 
+  List<int> numbers = [10, 20, 30, 40, 50, 60, 70, 80];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -22,13 +24,11 @@ class _MyHomePageState extends State<MyHomePage> {
     _counter = 10;
   }
 
-  // didUpdateWidget est appelé lorsque le widget est reconstruit avec de nouvelles propriétés
   @override
-  void didUpdateWidget(covariant MyHomePage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.title != widget.title) {
-      // Faites quelque chose si le titre a changé
-    }
+  void dispose() {
+    // TODO: implement dispose
+    counterController.dispose();
+    super.dispose();
   }
 
   void _decremtCounter() {
@@ -80,6 +80,23 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: .center,
           children: [
+            // listview
+            ListView.builder(
+              itemCount: numbers.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text('Nombre: ${numbers[index]}'),
+                  onTap: (){
+                    setState(() {
+                      _counter = numbers[index];
+                      counterController.text = numbers[index].toString();
+                    });
+                  } ,
+                );
+              },
+            ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
